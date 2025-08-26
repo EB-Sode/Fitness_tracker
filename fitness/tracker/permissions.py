@@ -8,7 +8,7 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
         # Safe methods = GET, HEAD, OPTIONS (everyone can view)
         if request.method in permissions.SAFE_METHODS:
             return True
-        #Tht is right
+        
         # Otherwise, only the owner can edit/delete
         return obj.user == request.user
     
