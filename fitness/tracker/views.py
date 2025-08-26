@@ -1,4 +1,4 @@
-from rest_framework import viewsets
+from rest_framework import viewsets, generics
 from .models import FitnessData, ActivityType, ActivitySummary
 from .serializers import FitnessDataSerializer, ActivityTypeSerializer, ActivitySummarySerializer
 from rest_framework.permissions import IsAuthenticated
@@ -56,7 +56,7 @@ class ActivityTypeViewSet(viewsets.ModelViewSet):
     def get_queryset(self):
         return ActivityType.objects.filter(user=self.request.user)
 
-class ActivitySummaryViewSet(viewsets.ModelViewSet):
+class ActivitySummaryList(generics.ListCreateAPIView):
     queryset = ActivitySummary.objects.all()
     serializer_class = ActivitySummarySerializer
     permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
