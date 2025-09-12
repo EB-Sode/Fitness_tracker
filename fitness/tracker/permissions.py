@@ -2,13 +2,25 @@ from rest_framework import permissions
 
 class IsOwnerOrReadOnly(permissions.BasePermission):
     """
-    Custom permission to only allow owners of an object to edit or delete it.
+    Allow users to view all, but only edit/delete their own account.
+    Superusers can edit/delete anyone.
     """
+
     def has_object_permission(self, request, view, obj):
-        # Safe methods = GET, HEAD, OPTIONS (everyone can view)
+        # Everyone can read
         if request.method in permissions.SAFE_METHODS:
             return True
-        
-        # Otherwise, only the owner can edit/delete
-        return obj.user == request.user
-    
+
+        # Superusers can edit/delete anyone
+        if request.user.is_superuser:
+            return True
+
+        # If the object is a user, check directly
+        if hasattr(obj, "id") and obj == request.user:
+            return True
+
+        # If the object has a `.user` field (like FitnessData), check ownership
+        if hasattr(obj, "user") and obj.user == request.user:
+            return True
+
+        return False

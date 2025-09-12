@@ -9,7 +9,7 @@ from tracker.permissions import IsOwnerOrReadOnly
 class UserViewSet(viewsets.ModelViewSet):
     queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
-    permission_classes = [AllowAny, IsAuthenticated, IsOwnerOrReadOnly]
+    permission_classes = [IsAuthenticated, IsOwnerOrReadOnly]
 
 class RegisterUserCreateView(generics.CreateAPIView):
     queryset = CustomUser.objects.all()
