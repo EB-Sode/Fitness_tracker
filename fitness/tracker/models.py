@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 CustomUser = get_user_model()
 
 # Create your models here.
+
 class ActivityType(models.Model):
     name = models.CharField(max_length=200, unique=True)
 
@@ -39,8 +40,7 @@ class ActivitySummary(models.Model):
     total_duration = models.DurationField()
     total_calories = models.FloatField()
     total_distance = models.FloatField(blank=True, null=True)
-    summary_type = models.CharField(
-        max_length=20,
+    summary_type = models.CharField(max_length=20,
         choices=[("daily", "Daily"), ("weekly", "Weekly"), ("monthly", "Monthly"), ("custom", "Custom")]
     )
 

@@ -9,6 +9,7 @@ from django.utils.dateparse import parse_date
 from django_filters.rest_framework import DjangoFilterBackend
 
 # Create your views here.
+
 class FitnessDataViewSet(viewsets.ModelViewSet):
     queryset = FitnessData.objects.all()
     serializer_class = FitnessDataSerializer
@@ -54,7 +55,8 @@ class ActivityTypeViewSet(viewsets.ModelViewSet):
 
     #filters
     def get_queryset(self):
-        return ActivityType.objects.filter(user=self.request.user)
+        # return ActivityType.objects.filter(user=self.request.user) # if ActivityType were user-specific
+        return ActivityType.objects.all() # if ActivityType is global
 
 class ActivitySummaryList(generics.ListCreateAPIView):
     queryset = ActivitySummary.objects.all()
